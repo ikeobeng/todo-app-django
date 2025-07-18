@@ -43,4 +43,6 @@ python manage.py runserver
 
 [Isaac Kwame Essien Obeng](https://www.linkedin.com/in/isaackeobeng) | [GitHub](https://github.com/ikeobeng)
 
+---
 
+_Building simple tools to solve real-world problems_
