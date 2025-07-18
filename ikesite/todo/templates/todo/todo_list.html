@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        /* Reset styling */
+        body, h1, h2, p, a, ul, li, form {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Body and general layout */
+        body {
+            background-color: #f4f7fc;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* Title and form container */
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        /* Form styling */
+        form {
+            margin-bottom: 30px;
+        }
+
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Error message styling */
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        /* Task List */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .completed {
+            color: green;
+            text-decoration: line-through;
+        }
+
+        .incomplete {
+            color: red;
+        }
+
+        /* Delete and Update button styling */
+        .delete-btn, .update-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .delete-btn {
+            background-color: #f8d7da;
+            color: red;
+        }
+
+        .delete-btn:hover {
+            background-color: #f1b0b7;
+        }
+
+        .update-btn {
+            background-color: #f0f0f0;
+            color: #4CAF50;
+        }
+
+        .update-btn:hover {
+            background-color: #e1e1e1;
+        }
+
+        /* Logout link */
+        p.logout-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        p.logout-link a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        p.logout-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>To-Do List</h1>
+
+        <!-- Error handling for form submission -->
+        {% if form.errors %}
+            <div class="error-message">
+                <p>Your input was invalid. Please try again.</p>
+            </div>
+        {% endif %}
+
+        <!-- Form to add a new Todo -->
+        <h2>Add a New Todo</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }} <!-- Renders form fields -->
+            <button type="submit">Add Todo</button>
+        </form>
+
+        <!-- List of all todos -->
+        <ul>
+            {% for task in todo_list %}
+                <li>
+                    <div>
+                        <strong>{{ task.title }}</strong>
+                        <p>{{ task.description }}</p>
+                        <p>Deadline: {{ task.date_deadline }}</p>
+                        {% if task.completed %}
+                            <span class="completed">(Completed)</span>
+                        {% else %}
+                            <span class="incomplete">(Incomplete)</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Update Todo button -->
+                    <form method="GET" action="{% url 'todo:update' task.pk %}" style="display:inline;">
+                        <button type="submit" class="update-btn">Update</button>
+                    </form>
+
+                    <!-- Delete Todo button -->
+                    <form method="POST" action="{% url 'todo:delete' task.pk %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Logout link -->
+        <p class="logout-link">You can <a href="{% url 'logout' %}?next={% url 'todo:open' %}">logout</a></p>
+    </div>
+
+</body>
+</html>
+
+
+
+

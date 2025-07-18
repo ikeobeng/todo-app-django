@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        /* General Reset */
+        body, h1, p, a {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fc;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Container for the main content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Header Styles */
+        h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+
+        /* Button Styles */
+        .button {
+            padding: 12px 30px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 15px 0;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Auth Section */
+        .auth-section {
+            margin: 30px 0;
+        }
+
+        /* Auth Text */
+        .auth-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Footer Section */
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main container for content -->
+    <div class="container">
+        <h1>Welcome to the Todo App!</h1>
+
+        <!-- User Authentication Check -->
+        <div class="auth-section">
+            {% if not user.is_authenticated %}
+                <p class="auth-text">If you don't have an account, <a href="{% url 'register' %}" class="button">Register here</a>.</p>
+            {% else %}
+                <p class="auth-text">Hello, {{ user.username }}! You are logged in.</p>
+                <a href="{% url 'logout' %}" class="button">Logout</a>
+            {% endif %}
+        </div>
+
+        <!-- Login Button -->
+        <a href="{% url 'login' %}" class="button">Login</a>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>Need help? <a href="mailto:support@todoapp.com">Contact Support</a></p>
+    </footer>
+
+</body>
+</html>
