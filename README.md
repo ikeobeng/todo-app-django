@@ -39,5 +39,7 @@ python manage.py runserver
 ---
 
 ## ✍️ Author
-Isaac Kwame Essien Obeng
-📫 [LinkedIn](https://www.linkedin.com/in/isaackeobeng) | [GitHub](https://github.com/ikeobeng)
+
+[Isaac Kwame Essien Obeng](https://www.linkedin.com/in/isaackeobeng) | [GitHub](https://github.com/ikeobeng)
+
+
